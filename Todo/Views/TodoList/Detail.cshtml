@@ -3,6 +3,8 @@
 @using Todo.Services
 @model Todo.Models.TodoLists.TodoListDetailViewmodel
 
+
+
 @{
     ViewData["Title"] = $"List: {Model.Title}";
 }
@@ -16,6 +18,10 @@
         <li class="list-group-item">
             <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                 <strong>Add New Item</strong>
+            </a>
+            <strong>|</strong>
+            <a id="hideDone">
+                <strong>Hide Done</strong>
             </a>
         </li>
 
@@ -35,7 +41,7 @@
                     break;
             }
 
-            <li class="list-group-item @contextualClass">
+            <li class="list-group-item @contextualClass IsDone_@item.IsDone">
 
                 <div class="row">
                     <div class="col-md-8">
@@ -68,3 +74,19 @@
         }
     </ul>
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var hide = true;
+        $("#hideDone").click(function () {
+            if (hide === true) {
+                $(".IsDone_True").hide();
+                hide = false;
+            } else {
+                $(".IsDone_True").show();
+                hide = true;
+            }
+        });
+    </script>
+}
